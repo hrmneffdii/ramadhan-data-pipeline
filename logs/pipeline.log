@@ -1,0 +1,14 @@
+2026-02-23 14:02:20,140 - INFO - Pipeline started!
+2026-02-23 14:02:20,140 - INFO - Current Working Directory: /home/hrmneffdii/Desktop/ramadhan-data-pipeline
+2026-02-23 14:02:20,140 - INFO - Running in scheduled mode
+2026-02-23 14:02:20,140 - INFO - Step 1: Extract started
+2026-02-23 14:02:22,273 - INFO -      Extracted rows: 93
+2026-02-23 14:02:22,273 - INFO -      Keywords used: ['takjil', 'baju lebaran', 'snack lebaran']
+2026-02-23 14:02:22,274 - INFO - Step 1: Extract completed
+2026-02-23 14:02:22,274 - INFO - Step 2: Transform started
+2026-02-23 14:02:22,303 - INFO - Step 2: Transform completed
+2026-02-23 14:02:22,303 - INFO - Step 3: Load started
+2026-02-23 14:02:22,350 - INFO - Step 3: Load completed
+2026-02-23 14:02:22,350 - INFO - Step 4: Modeling started
+2026-02-23 14:02:22,476 - INFO - Step 4: Modeling completed
+2026-02-23 14:02:22,477 - INFO - Pipeline finished successfully!
