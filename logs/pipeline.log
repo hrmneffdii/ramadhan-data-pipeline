@@ -12,3 +12,134 @@
 2026-02-23 14:02:22,350 - INFO - Step 4: Modeling started
 2026-02-23 14:02:22,476 - INFO - Step 4: Modeling completed
 2026-02-23 14:02:22,477 - INFO - Pipeline finished successfully!
+2026-02-24 17:20:35,573 - INFO - Pipeline started!
+2026-02-24 17:20:35,574 - INFO - Current Working Directory: /home/hrmneffdii/Desktop/ramadhan-data-pipeline
+2026-02-24 17:20:35,574 - INFO - Running in scheduled mode
+2026-02-24 17:20:35,574 - INFO - Step 1: Extract started
+2026-02-24 17:20:37,434 - ERROR - Pipeline failed: 'str' object has no attribute 'parent'
+2026-02-24 17:21:58,386 - INFO - Pipeline started!
+2026-02-24 17:21:58,386 - INFO - Current Working Directory: /home/hrmneffdii/Desktop/ramadhan-data-pipeline
+2026-02-24 17:21:58,386 - INFO - Running in scheduled mode
+2026-02-24 17:21:58,386 - INFO - Step 1: Extract started
+2026-02-24 17:22:00,856 - INFO -      Extracted rows: 93
+2026-02-24 17:22:00,856 - INFO -      Keywords used: ['takjil', 'baju lebaran', 'snack lebaran']
+2026-02-24 17:22:00,857 - INFO - Step 1: Extract completed
+2026-02-24 17:22:00,857 - INFO - Step 2: Transform started
+2026-02-24 17:22:00,876 - ERROR - Pipeline failed: 'str' object has no attribute 'parent'
+2026-02-24 17:22:38,418 - INFO - Pipeline started!
+2026-02-24 17:22:38,418 - INFO - Current Working Directory: /home/hrmneffdii/Desktop/ramadhan-data-pipeline
+2026-02-24 17:22:38,418 - INFO - Running in scheduled mode
+2026-02-24 17:22:38,418 - INFO - Step 1: Extract started
+2026-02-24 17:22:40,689 - INFO -      Extracted rows: 93
+2026-02-24 17:22:40,690 - INFO -      Keywords used: ['takjil', 'baju lebaran', 'snack lebaran']
+2026-02-24 17:22:40,690 - INFO - Step 1: Extract completed
+2026-02-24 17:22:40,690 - INFO - Step 2: Transform started
+2026-02-24 17:22:40,712 - INFO - Step 2: Transform completed
+2026-02-24 17:22:40,712 - INFO - Step 3: Validate data
+2026-02-24 17:22:40,715 - INFO - Step 3: validate completed
+2026-02-24 17:22:40,715 - INFO - Step 4: Load started
+2026-02-24 17:22:40,719 - ERROR - Pipeline failed: 'str' object has no attribute 'parent'
+2026-02-24 17:23:34,494 - INFO - Pipeline started!
+2026-02-24 17:23:34,494 - INFO - Current Working Directory: /home/hrmneffdii/Desktop/ramadhan-data-pipeline
+2026-02-24 17:23:34,494 - INFO - Running in scheduled mode
+2026-02-24 17:23:34,494 - INFO - Step 1: Extract started
+2026-02-24 17:23:37,008 - INFO -      Extracted rows: 93
+2026-02-24 17:23:37,008 - INFO -      Keywords used: ['takjil', 'baju lebaran', 'snack lebaran']
+2026-02-24 17:23:37,009 - INFO - Step 1: Extract completed
+2026-02-24 17:23:37,009 - INFO - Step 2: Transform started
+2026-02-24 17:23:37,033 - INFO - Step 2: Transform completed
+2026-02-24 17:23:37,033 - INFO - Step 3: Validate data
+2026-02-24 17:23:37,036 - INFO - Step 3: validate completed
+2026-02-24 17:23:37,036 - INFO - Step 4: Load started
+2026-02-24 17:23:37,060 - INFO - Step 4: Load completed
+2026-02-24 17:23:37,061 - INFO - Step 5: Modeling started
+2026-02-24 17:23:37,175 - INFO - Step 5: Modeling completed
+2026-02-24 17:23:37,175 - INFO - Pipeline finished successfully!
+2026-02-24 17:32:00,603 - INFO - Pipeline started!
+2026-02-24 17:32:00,603 - INFO - Current Working Directory: /home/hrmneffdii/Desktop/ramadhan-data-pipeline
+2026-02-24 17:32:00,603 - INFO - Running in scheduled mode
+2026-02-24 17:32:00,603 - INFO - Step 1: Extract started
+2026-02-24 17:32:03,389 - INFO -      Extracted rows: 93
+2026-02-24 17:32:03,389 - INFO -      Keywords used: ['takjil', 'baju lebaran', 'snack lebaran']
+2026-02-24 17:32:03,390 - INFO - Step 1: Extract completed
+2026-02-24 17:32:03,390 - INFO - Step 2: Transform started
+2026-02-24 17:32:03,412 - INFO - Step 2: Transform completed
+2026-02-24 17:32:03,413 - INFO - Step 3: Validate data
+2026-02-24 17:32:03,415 - INFO - Step 3: validate completed
+2026-02-24 17:32:03,415 - INFO - Step 4: Load started
+2026-02-24 17:32:03,423 - INFO - Step 4: Load completed
+2026-02-24 17:32:03,424 - INFO - Step 5: Modeling started
+2026-02-24 17:32:03,524 - INFO - Step 5: Modeling completed
+2026-02-24 17:32:03,541 - INFO - Pipeline finished successfully!
+2026-02-25 08:42:25,615 - INFO - Pipeline started!
+2026-02-25 08:42:25,616 - INFO - Current Working Directory: /home/hrmneffdii/Desktop/ramadhan-data-pipeline
+2026-02-25 08:42:25,616 - INFO - Running in scheduled mode
+2026-02-25 08:42:25,616 - INFO - Step 1: Extract started
+2026-02-25 08:42:28,435 - INFO - Raw data saved to data/raw/trends_raw.csv
+2026-02-25 08:42:28,436 - INFO -      Extracted rows: 93
+2026-02-25 08:42:28,436 - INFO -      Keywords used: ['takjil', 'baju lebaran', 'snack lebaran']
+2026-02-25 08:42:28,436 - INFO -         Extract completed
+2026-02-25 08:42:28,436 - INFO - Step 2: Transform started
+2026-02-25 08:42:28,460 - INFO - Processed data saved to data/processed/trends_processed.csv
+2026-02-25 08:42:28,460 - INFO -         Transform completed
+2026-02-25 08:42:28,460 - INFO - Step 3: Validate data
+2026-02-25 08:42:28,462 - INFO -         validate completed
+2026-02-25 08:42:28,462 - INFO - Step 4: Load started
+2026-02-25 08:42:28,482 - INFO -         Load completed
+2026-02-25 08:42:28,482 - INFO - Step 5: Modeling started
+2026-02-25 08:42:28,579 - INFO -         Modeling completed
+2026-02-25 08:42:28,585 - INFO - Pipeline finished successfully!
+2026-02-25 08:45:27,286 - INFO - Pipeline started!
+2026-02-25 08:45:27,286 - INFO - Current Working Directory: /home/hrmneffdii/Desktop/ramadhan-data-pipeline
+2026-02-25 08:45:27,286 - INFO - Running in scheduled mode
+2026-02-25 08:45:27,286 - INFO - Step 1: Extract started
+2026-02-25 08:45:29,986 - INFO - Raw data saved to data/raw/trends_raw.csv
+2026-02-25 08:45:29,987 - INFO -      Extracted rows: 93
+2026-02-25 08:45:29,987 - INFO -      Keywords used: ['takjil', 'baju lebaran', 'snack lebaran', 'promo']
+2026-02-25 08:45:29,987 - INFO -         Extract completed
+2026-02-25 08:45:29,988 - INFO - Step 2: Transform started
+2026-02-25 08:45:30,011 - INFO - Processed data saved to data/processed/trends_processed.csv
+2026-02-25 08:45:30,011 - INFO -         Transform completed
+2026-02-25 08:45:30,011 - INFO - Step 3: Validate data
+2026-02-25 08:45:30,013 - INFO -         validate completed
+2026-02-25 08:45:30,014 - INFO - Step 4: Load started
+2026-02-25 08:45:30,023 - INFO -         Load completed
+2026-02-25 08:45:30,023 - INFO - Step 5: Modeling started
+2026-02-25 08:45:30,134 - INFO -         Modeling completed
+2026-02-25 08:45:30,143 - INFO - Pipeline finished successfully!
+2026-02-25 08:46:07,909 - INFO - Pipeline started!
+2026-02-25 08:46:07,909 - INFO - Current Working Directory: /home/hrmneffdii/Desktop/ramadhan-data-pipeline
+2026-02-25 08:46:07,909 - INFO - Running in scheduled mode
+2026-02-25 08:46:07,909 - INFO - Step 1: Extract started
+2026-02-25 08:46:09,291 - INFO - Raw data saved to data/raw/trends_raw.csv
+2026-02-25 08:46:09,292 - INFO -      Extracted rows: 93
+2026-02-25 08:46:09,292 - INFO -      Keywords used: ['takjil', 'baju lebaran', 'snack lebaran', 'diskon']
+2026-02-25 08:46:09,292 - INFO -         Extract completed
+2026-02-25 08:46:09,292 - INFO - Step 2: Transform started
+2026-02-25 08:46:09,321 - INFO - Processed data saved to data/processed/trends_processed.csv
+2026-02-25 08:46:09,321 - INFO -         Transform completed
+2026-02-25 08:46:09,321 - INFO - Step 3: Validate data
+2026-02-25 08:46:09,325 - INFO -         validate completed
+2026-02-25 08:46:09,325 - INFO - Step 4: Load started
+2026-02-25 08:46:09,335 - INFO -         Load completed
+2026-02-25 08:46:09,336 - INFO - Step 5: Modeling started
+2026-02-25 08:46:09,443 - INFO -         Modeling completed
+2026-02-25 08:46:09,450 - INFO - Pipeline finished successfully!
+2026-02-25 08:46:26,958 - INFO - Pipeline started!
+2026-02-25 08:46:26,959 - INFO - Current Working Directory: /home/hrmneffdii/Desktop/ramadhan-data-pipeline
+2026-02-25 08:46:26,959 - INFO - Running in scheduled mode
+2026-02-25 08:46:26,959 - INFO - Step 1: Extract started
+2026-02-25 08:46:27,862 - INFO - Raw data saved to data/raw/trends_raw.csv
+2026-02-25 08:46:27,862 - INFO -      Extracted rows: 93
+2026-02-25 08:46:27,863 - INFO -      Keywords used: ['takjil', 'baju lebaran', 'snack lebaran', 'diskon']
+2026-02-25 08:46:27,863 - INFO -         Extract completed
+2026-02-25 08:46:27,863 - INFO - Step 2: Transform started
+2026-02-25 08:46:27,887 - INFO - Processed data saved to data/processed/trends_processed.csv
+2026-02-25 08:46:27,887 - INFO -         Transform completed
+2026-02-25 08:46:27,888 - INFO - Step 3: Validate data
+2026-02-25 08:46:27,890 - INFO -         validate completed
+2026-02-25 08:46:27,890 - INFO - Step 4: Load started
+2026-02-25 08:46:27,926 - INFO -         Load completed
+2026-02-25 08:46:27,926 - INFO - Step 5: Modeling started
+2026-02-25 08:46:28,005 - INFO -         Modeling completed
+2026-02-25 08:46:28,016 - INFO - Pipeline finished successfully!

@@ -1,14 +1,20 @@
-from pathlib import Path
+# import library
+import os
+from dotenv import load_dotenv
 
-# Base project directory
-BASE_DIR = Path(__file__).resolve().parent.parent
+# load .env
+load_dotenv()
 
-# Data paths (staging architecture)
-RAW_DATA_PATH = BASE_DIR / "data" / "raw" / "trends_raw.csv"
-PROCESSED_DATA_PATH = BASE_DIR / "data" / "processed" / "trends_processed.csv"
-DB_PATH = BASE_DIR / "data" / "warehouse" / "trends.db"
+# getting data from .env
+RAW_DATA_PATH = os.getenv("RAW_DATA_PATH")
+PROCESSED_DATA_PATH = os.getenv("PROCESSED_DATA_PATH")
+DB_PATH = os.getenv("DB_PATH")
 
-# Google Trends Configuration
-KEYWORDS = ["takjil", "baju lebaran", "snack lebaran"]
+LOG_LEVEL = os.getenv("LOG_LEVEL")
+
+# custom variabel as input
+KEYWORDS = ["takjil", "baju lebaran", "snack lebaran", "diskon"]
 TIMEFRAME = "today 3-m"
 COUNTRY = "ID"
+
+TABLE_NAME = "ramadhan_trends"

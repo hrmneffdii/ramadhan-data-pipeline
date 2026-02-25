@@ -1,6 +1,9 @@
+# import library
+import logging
 import pandas as pd
 from config.settings import RAW_DATA_PATH, PROCESSED_DATA_PATH
 
+# function to transform raw data
 def transform_trends():
     print("Transforming raw data...")
 
@@ -22,8 +25,10 @@ def transform_trends():
     df['total_search_interest'] = df[keyword_cols].sum(axis=1)
 
     # Save processed data
-    PROCESSED_DATA_PATH.parent.mkdir(parents=True, exist_ok=True)
     df.to_csv(PROCESSED_DATA_PATH, index=False)
 
-    print(f"Processed data saved to {PROCESSED_DATA_PATH}")
+    # save logging info
+    logging.info(f"Processed data saved to {PROCESSED_DATA_PATH}")
+
+    # returning dataframe in order to validate
     return df
