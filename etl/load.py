@@ -10,48 +10,50 @@ def load_to_warehouse():
     # read processed csv
     df_new = pd.read_csv(PROCESSED_DATA_PATH)
 
-    # connect database
-    conn = sqlite3.connect(DB_PATH)
-    cursor = conn.cursor()
-
     try:
-        # first, check last date in warehouse
-        cursor.execute(f"SELECT MAX(date) FROM {TABLE_NAME}")
-        result = cursor.fetchone()
-        last_date = result[0]
+        with sqlite3.connect(DB_PATH) as conn:
+            cursor = conn.cursor()
 
-        if last_date:
-            # second, filter only new records
-            df_new = df_new[df_new["date"] > last_date]
+            # check last date in warehouse
+            try:
+                cursor.execute(f"SELECT MAX(date) FROM {TABLE_NAME}")
+                result = cursor.fetchone()
+                last_date = result[0]
+            except sqlite3.OperationalError:
+                # table belum ada (first load)
+                df_new.to_sql(
+                    name=TABLE_NAME,
+                    con=conn,
+                    if_exists="replace",
+                    index=False
+                )
+                print("First time load completed.")
+                return len(df_new)
 
-        if df_new.empty:
-            print("No new data to load.")
-            conn.close()
-            return 0
+            # incremental filter
+            if last_date:
+                last_date = pd.to_datetime(last_date)
+                df_new['date'] = df_new['date'].astype("datetime64[s]")
+                df_new = df_new[df_new['date'] > last_date]
 
-        # third, append only new data
-        df_new.to_sql(
-            name=TABLE_NAME,
-            con=conn,
-            if_exists="append",
-            index=False
-        )
+            # idempotent: tidak ada data baru
+            if df_new.empty:
+                print("No new data to load.")
+                return 0
 
-        print(f"Incremental load completed. {len(df_new)} rows inserted.")
+            # append new data
+            df_new.to_sql(
+                name=TABLE_NAME,
+                con=conn,
+                if_exists="append",
+                index=False
+            )
 
-    except sqlite3.OperationalError:
-        # first time load (table not exists)
-        df_new.to_sql(
-            name=TABLE_NAME,
-            con=conn,
-            if_exists="replace",
-            index=False
-        )
+            print(f"Incremental load completed. {len(df_new)} rows inserted.")
+            return len(df_new)
 
-        print("First time load completed.")
-
-    # close the connection of the database
-    conn.close()
-
+    except Exception as e:
+        raise RuntimeError(f"Load to warehouse failed: {e}")
+  
     # returning length of new data
     return len(df_new)

@@ -1,20 +1,23 @@
 # import library
 import os
+from pathlib import Path
 from dotenv import load_dotenv
 
 # load .env
 load_dotenv()
 
-# getting data from .env
-RAW_DATA_PATH = os.getenv("RAW_DATA_PATH")
-PROCESSED_DATA_PATH = os.getenv("PROCESSED_DATA_PATH")
-DB_PATH = os.getenv("DB_PATH")
+# Project root (penting untuk cron)
+BASE_DIR = Path(__file__).resolve().parent.parent
 
-LOG_LEVEL = os.getenv("LOG_LEVEL")
+# getting data from .env
+RAW_DATA_PATH = BASE_DIR / os.getenv("RAW_DATA_PATH")
+PROCESSED_DATA_PATH = BASE_DIR / os.getenv("PROCESSED_DATA_PATH")
+DB_PATH = BASE_DIR / os.getenv("DB_PATH")
 
 # custom variabel as input
 KEYWORDS = ["takjil", "baju lebaran", "snack lebaran", "diskon"]
 TIMEFRAME = "today 3-m"
 COUNTRY = "ID"
 
-TABLE_NAME = "ramadhan_trends"
+# custom table
+TABLE_NAME = "stg_trends"

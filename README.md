@@ -46,6 +46,9 @@ ETL Flow:
   - Baju Lebaran
   - Snack Lebaran
 
+## Data Grain
+1 row in fact_trends = 1 keyword per day (Google Trends Indonesia)
+
 ## 🛠️ Setup & Installation
 Clone the repository:
 ```bash

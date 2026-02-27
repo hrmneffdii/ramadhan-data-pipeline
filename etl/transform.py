@@ -7,6 +7,7 @@ from config.settings import RAW_DATA_PATH, PROCESSED_DATA_PATH
 def transform_trends():
     print("Transforming raw data...")
 
+    # read raw data
     df = pd.read_csv(RAW_DATA_PATH)
 
     # Standardize column names

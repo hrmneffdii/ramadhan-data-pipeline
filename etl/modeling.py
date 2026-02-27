@@ -2,6 +2,7 @@
 import sqlite3
 import pandas as pd
 from config.settings import DB_PATH, TABLE_NAME
+from etl.schema import create_tables, create_indexes
 
 # function to create dimentional keywords
 def create_dim_keyword(conn, df):
@@ -26,26 +27,38 @@ def create_dim_keyword(conn, df):
 
 # function to create fact trends
 def create_fact_trends(conn, df):
-    # extract the keywords
-    keyword_cols = [col for col in df.columns if col not in ["date", "total_search_interest"]]
-    
+
+    keyword_cols = [
+        col for col in df.columns 
+        if col not in ["date", "total_search_interest"]
+    ]
+
     fact_df = df.melt(
         id_vars=["date"],
         value_vars=keyword_cols,
-        var_name="keyword",
+        var_name="keyword_name",
         value_name="search_interest"
     )
 
-    # save to database
+    dim_keyword = pd.read_sql("SELECT * FROM dim_keyword", conn)
+
+    fact_df = fact_df.merge(
+        dim_keyword,
+        on="keyword_name",
+        how="left"
+    )
+
+    fact_df = fact_df[["date", "keyword_id", "search_interest"]]
+
     fact_df.to_sql(
-        name="fact_trends",
-        con=conn,
-        if_exists="replace",
+        "fact_trends",
+        conn,
+        if_exists="append",
         index=False
     )
 
-    # return fact trends as dataframe
     return fact_df
+
 
 # function to create data mart (aggregation phase)
 def create_weekly_mart(conn):
@@ -53,10 +66,10 @@ def create_weekly_mart(conn):
     query = """
     SELECT 
         strftime('%Y-%W', date) AS year_week,
-        keyword,
+        keyword_id,
         AVG(search_interest) AS avg_search_interest
     FROM fact_trends
-    GROUP BY year_week, keyword
+    GROUP BY year_week, keyword_id
     ORDER BY year_week;
     """
 
@@ -79,21 +92,19 @@ def run_modeling():
     print("Starting data warehouse modeling...")
 
     # create a connection for database
-    conn = sqlite3.connect(DB_PATH)
-    
-    # read the data from sql
-    df = pd.read_sql(f"SELECT * FROM {TABLE_NAME}", conn)
+    with sqlite3.connect(DB_PATH) as conn:    
+        # read the data from sql
+        df = pd.read_sql(f"SELECT * FROM {TABLE_NAME}", conn)
 
-    # Create Dimension Table
-    create_dim_keyword(conn, df)
+        # 1. Ensure schema exists
+        create_tables(conn)
 
-    # Create Fact Table
-    create_fact_trends(conn, df)
+        # 2. Transform & load
+        create_dim_keyword(conn, df)
+        create_fact_trends(conn, df)
+        create_weekly_mart(conn)
 
-    # Create Data Mart (Aggregated)
-    create_weekly_mart(conn)
-
-    # close connection from database
-    conn.close()
+        # 3. Ensure indexing
+        create_indexes(conn)
 
     print("Data warehouse modeling completed!")
