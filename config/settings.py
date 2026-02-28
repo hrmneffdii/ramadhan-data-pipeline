@@ -19,5 +19,11 @@ KEYWORDS = ["takjil", "baju lebaran", "snack lebaran", "diskon"]
 TIMEFRAME = "today 3-m"
 COUNTRY = "ID"
 
-# custom table
-TABLE_NAME = "stg_trends"
+# table
+STAGING_TABLE = "stg_trends"
+DIM_DATE = "dim_date"
+DIM_KEYWORD = "dim_keyword"
+FACT_TRENDS = "fact_trends"
+PIPELINE_RUNS_TABLE = "pipeline_runs"
+DATA_QUALITY_METRICS_TABLE = "data_quality_metrics"
+MART_WEEKLY_TRENDS_TABLE = "mart_weekly_trends" 

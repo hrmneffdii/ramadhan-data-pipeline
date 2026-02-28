@@ -1,76 +1,48 @@
 # import library
 import sqlite3
 import pandas as pd
-from config.settings import DB_PATH, TABLE_NAME
-from etl.schema import create_tables, create_indexes
+from config.settings import DB_PATH, DIM_KEYWORD, DIM_DATE, FACT_TRENDS
 
 # function to create dimentional keywords
-def create_dim_keyword(conn, df):
-
-    # extract column variables as keywords
-    keywords = [col for col in df.columns if col not in ["date", "total_search_interest"]]
-    
-    # create a dataframe with 
-    dim_df = pd.DataFrame({
-        "keyword_id": range(1, len(keywords) + 1),
-        "keyword_name": keywords
-    })
-
-    dim_df.to_sql(
-        name="dim_keyword",
-        con=conn,
-        if_exists="replace",
-        index=False
-    )
-    
-    return dim_df
+def upsert_dim_keyword(conn):
+    query = f"""
+        INSERT INTO {DIM_KEYWORD} (keyword_name)
+        SELECT DISTINCT s.keyword
+        FROM stg_trends s
+        LEFT JOIN dim_keyword d
+            ON s.keyword = d.keyword_name
+        WHERE d.keyword_name IS NULL;
+        """
+    conn.execute(query)
+    conn.commit()
 
 # function to create fact trends
-def create_fact_trends(conn, df):
-
-    keyword_cols = [
-        col for col in df.columns 
-        if col not in ["date", "total_search_interest"]
-    ]
-
-    fact_df = df.melt(
-        id_vars=["date"],
-        value_vars=keyword_cols,
-        var_name="keyword_name",
-        value_name="search_interest"
-    )
-
-    dim_keyword = pd.read_sql("SELECT * FROM dim_keyword", conn)
-
-    fact_df = fact_df.merge(
-        dim_keyword,
-        on="keyword_name",
-        how="left"
-    )
-
-    fact_df = fact_df[["date", "keyword_id", "search_interest"]]
-
-    fact_df.to_sql(
-        "fact_trends",
-        conn,
-        if_exists="append",
-        index=False
-    )
-
-    return fact_df
+def insert_fact_trends(conn):
+    query = f"""
+        INSERT INTO {FACT_TRENDS} (date_key, keyword_key, interest_score)
+        SELECT 
+            s.date,
+            d.keyword_key,
+            s.interest_score
+        FROM stg_trends s
+        JOIN dim_keyword d
+            ON s.keyword = d.keyword_name;
+        """
+    conn.execute(query)
+    conn.commit()
 
 
 # function to create data mart (aggregation phase)
 def create_weekly_mart(conn):
     # create a query
-    query = """
-    SELECT 
-        strftime('%Y-%W', date) AS year_week,
-        keyword_id,
-        AVG(search_interest) AS avg_search_interest
-    FROM fact_trends
-    GROUP BY year_week, keyword_id
-    ORDER BY year_week;
+    query = f"""
+        SELECT 
+            strftime('%Y-%W', date_key) AS year_week,
+            keyword_key,
+            AVG(interest_score) AS avg_interest_score
+        FROM {FACT_TRENDS}
+        GROUP BY year_week, keyword_key
+        ORDER BY year_week;
     """
 
     # execute query 
@@ -93,18 +65,9 @@ def run_modeling():
 
     # create a connection for database
     with sqlite3.connect(DB_PATH) as conn:    
-        # read the data from sql
-        df = pd.read_sql(f"SELECT * FROM {TABLE_NAME}", conn)
-
-        # 1. Ensure schema exists
-        create_tables(conn)
-
-        # 2. Transform & load
-        create_dim_keyword(conn, df)
-        create_fact_trends(conn, df)
+        # modeling the data
+        upsert_dim_keyword(conn)
+        insert_fact_trends(conn)
         create_weekly_mart(conn)
-
-        # 3. Ensure indexing
-        create_indexes(conn)
 
     print("Data warehouse modeling completed!")

@@ -1,0 +1,113 @@
+version: 1.0.0
+dataset: google_trends_daily
+owner: data_engineering
+domain: marketing_analytics
+
+description: >
+  Daily keyword interest score from Google Trends.
+  Source is raw CSV exported from API.
+  Grain is 1 keyword per 1 day.
+
+# ==========================
+# RAW LAYER
+# ==========================
+raw:
+  file_format: csv
+  required_columns:
+    - date
+  rules:
+    date_format: "%Y-%m-%d"
+    minimum_keyword_columns: 1
+    keyword_value_type: integer
+    allowed_interest_range: [0, 100]
+
+# ==========================
+# PROCESSED LAYER (LONG FORMAT)
+# ==========================
+processed:
+  grain:
+    - date
+    - keyword
+
+  schema:
+    date:
+      type: string
+      nullable: false
+      format: "%Y-%m-%d"
+
+    keyword:
+      type: string
+      nullable: false
+      max_length: 255
+
+    interest_score:
+      type: integer
+      nullable: false
+      minimum: 0
+      maximum: 100
+
+  constraints:
+    unique_combination:
+      - date
+      - keyword
+
+# ==========================
+# STAGING LAYER
+# ==========================
+staging:
+  schema:
+    date:
+      type: string
+      nullable: false
+
+    keyword:
+      type: string
+      nullable: false
+
+    interest_score:
+      type: integer
+      nullable: false
+
+    ingested_at:
+      type: timestamp
+      nullable: false
+
+# ==========================
+# WAREHOUSE LAYER
+# ==========================
+warehouse:
+  fact_table: fact_trends
+
+  grain:
+    - date_key
+    - keyword_key
+
+  metrics:
+    - interest_score
+
+  foreign_keys:
+    date_key:
+      references: dim_date.date_key
+      nullable: false
+
+    keyword_key:
+      references: dim_keyword.keyword_key
+      nullable: false
+
+# ==========================
+# DATA QUALITY EXPECTATIONS
+# ==========================
+quality_checks:
+  - no_null_in_fact_foreign_keys
+  - no_duplicate_fact_grain
+  - interest_score_between_0_100
+  - no_future_dates
+  - completeness_check_per_day
+
+# ==========================
+# SLA
+# ==========================
+sla:
+  freshness: daily
+  expected_arrival_time: "06:00 UTC"
+  tolerance_minutes: 60

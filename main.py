@@ -9,9 +9,10 @@ from etl.load import load_to_warehouse
 from etl.transform import transform_trends
 from etl.modeling import run_modeling
 from etl.monitoring import log_pipeline_run
-from etl.quality.validator import run_quality_checks
 from etl.utils.date_utils import get_today_date, get_duration
 from etl.utils.db_utils import truncate_fact_table
+from etl.quality.contract_validator import validate_processed_contract
+from etl.schema import init_schema
 
 # Setup logging
 LOG_PATH = Path("logs/pipeline.log")
@@ -32,7 +33,7 @@ def run_pipeline_for_date(start_date, end_date=None):
 
     # start time
     start = time.time()
-
+    
     try:
         print("Pipeline started..")
         extract_trends(start_date, end_date)
@@ -41,7 +42,7 @@ def run_pipeline_for_date(start_date, end_date=None):
         df = transform_trends()
         logging.info("Step 2: Transform completed!")
 
-        run_quality_checks(df)
+        validate_processed_contract(df)
         logging.info("Step 3: Validate data completed!")
 
         rows = load_to_warehouse()
