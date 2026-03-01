@@ -2,6 +2,7 @@
 import logging
 import pandas as pd
 from config.settings import RAW_DATA_PATH, PROCESSED_DATA_PATH
+from etl.quality.contract_validator import validate_processed_contract
 
 def transform_trends():
     print("Transforming raw data to long format...")
@@ -34,12 +35,8 @@ def transform_trends():
         value_name='interest_score'
     )
 
-    # Enforce data types
-    df_long['interest_score'] = df_long['interest_score'].astype(int)
-
-    # Contract validation rules
-    if df_long['interest_score'].min() < 0 or df_long['interest_score'].max() > 100:
-        raise ValueError("Processed contract violation: interest_score out of range")
+    # validate long format table
+    validate_processed_contract(df_long)
 
     # Save processed data
     df_long.to_csv(PROCESSED_DATA_PATH, index=False)
